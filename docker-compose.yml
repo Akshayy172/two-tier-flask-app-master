@@ -2,7 +2,6 @@ version: "3.8"
 
 services:
   mysql:
-    user: "${UID}:${GID}" 
     image: mysql:5.7
     container_name: mysql
     environment:
@@ -33,12 +32,13 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_DB: devops
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy  # Wait until MySQL is healthy
     networks:
       - twotier
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]  # Corrected test command
       interval: 10s
       timeout: 5s
       retries: 5
