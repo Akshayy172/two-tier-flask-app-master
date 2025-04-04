@@ -6,7 +6,7 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: devops
+      MYSQL_DATABASE: flaskdb
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
     volumes:
@@ -30,7 +30,7 @@ services:
       MYSQL_HOST: mysql
       MYSQL_USER: root
       MYSQL_PASSWORD: root
-      MYSQL_DB: devops
+      MYSQL_DB: flaskdb
     depends_on:
       - mysql
     networks:
