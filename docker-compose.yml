@@ -22,7 +22,7 @@ services:
       start_period: 60s
 
   flask-app:
-    image: trainwithshubham/two-tier-flask-app:latest
+    image: akshay172/flask-app:latest   # ✅ Use your Docker Hub image here
     container_name: flask-app
     ports:
       - "5000:5000"
@@ -32,13 +32,12 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_DB: devops
     depends_on:
-      mysql:
-        condition: service_healthy  # Wait until MySQL is healthy
+      - mysql
     networks:
       - twotier
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/"]  # Corrected test command
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
